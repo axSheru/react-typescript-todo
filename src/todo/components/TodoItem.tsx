@@ -1,4 +1,6 @@
 import { Todo } from "../interface/interfaces";
+import { useContext } from 'react';
+import { TodoContext } from "../context/TodoContext";
 
 
 interface TodoItemProps {
@@ -7,12 +9,20 @@ interface TodoItemProps {
 
 export const TodoItem = ( { todo }: TodoItemProps ) => {
 
+    const { toggleTodo } = useContext( TodoContext );
+
     const handleDbClick = () => {
-        console.log( todo.desc )
+        toggleTodo( todo.id );
     };
 
     return (
-        <li onDoubleClick={ handleDbClick }>
+        <li
+            onDoubleClick={ handleDbClick }
+            style={{
+                cursor: 'pointer',
+                textDecoration: todo.completed ? 'line-through' : ''
+            }}
+        >
             { todo.desc }
         </li>
     );
